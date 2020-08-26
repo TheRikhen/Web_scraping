@@ -1,0 +1,9 @@
+Simple data scrapping project, that getting url and depth(link exploration level).
+
+This project exist:
+    1. Get url from the analyzed page;
+    2. Number of characters / words on the analyzed page;
+    3. Char frequency histogram(rus, eng, spec symbols);
+    4. Word length frequency histogram(how many chars are in words on the analyzed pages(words(len));
+    5. Build url massive, and for each url in massive repeat task 1-4;
+    6. Unite statistics from all links.
