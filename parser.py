@@ -36,7 +36,7 @@ def fetch_url(url):
                                                  or link['href'].startswith('https://')):
                     new_list.append(link['href'])
                     # get_symbol_gists() histogram for
-                    # each url in url_list,change also string number 79
+                    # each url in url_list,change also string number 84
             get_text(text)
         url_list = new_list
         new_list = []
