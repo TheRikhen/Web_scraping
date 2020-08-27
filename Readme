@@ -1,9 +1,31 @@
 Simple data scrapping project, that getting url and depth(link exploration level).
 
+
 This project exist:
-    1. Get url from the analyzed page;
-    2. Number of characters / words on the analyzed page;
-    3. Char frequency histogram(rus, eng, spec symbols);
-    4. Word length frequency histogram(how many chars are in words on the analyzed pages(words(len));
-    5. Build url massive, and for each url in massive repeat task 1-4;
-    6. Unite statistics from all links.
+    1. Getting links from the analyzed page;
+    2. Getting Number of characters / words on the analyzed page;
+    3. Building char frequency histogram(rus, eng, spec symbols);
+    4. Building word length frequency histogram(how many chars are in words on the analyzed pages(words(len));
+    5. Building link massive, and for each link in massive repeat task 1-4;
+    6. Merging statistics from all links;
+    7. Getting img links from the analyzed page;
+    8. Getting ims sizes / avg sizes from the analyzed page;
+    9. Building tag cloud.
+
+
+    Получение на вход программы URL страницы интернет-ресурса, а так же параметра
+depth - уровень глубины исследования ссылок, присутствующих на заданной странице.
+
+
+1. Количество ссылок на странице анализируемого уровня
+2. Количество слов/символов на странице анализируемого уровня
+3. Гистограмма частоты встречаемости символов на странице анализируемого
+уровня (русск., англ., спец. символы).
+4. Гистограмма встречаемости длин слов (т.е. сколько слов состоит из 1,2,3,4…
+и т.п. k- символов).
+5. Таблица ссылок и для каждой ссылки из таблицы повторить шаги 1-4.
+6. Объединить статистику разных страниц в соответствующие таблицы (ш. 1-4),
+отображающие единую статистику по всем проанализированным страницам.
+7. Количество изображений на странице
+8. Общий и средний размер изображений на странице
+9. Облако тегов по странице и ссылкам

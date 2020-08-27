@@ -11,15 +11,13 @@ import numpy as np
 from PIL import Image
 
 
-url_list = []
-depth = 0  # 1/2
-page_text = ''
+url_list, depth, page_text, images = [], 0, '', []
 
 
 def program_start():
-    print('Введите url-адресс')
+    print('Enter url-adress')
     start_page = str(input())
-    print('Введите глубину исследования ссылки:')
+    print('Enter depth:')
     global depth
     depth = int(input())
     fetch_url(start_page)
@@ -32,16 +30,46 @@ def fetch_url(url):
         for item in url_list:
             text = requests.get(item).text
             soup = BeautifulSoup(text, 'lxml')
+            fetch_pic(soup, item)
             for link in soup.find_all('a', href=True):
                 if link['href'] is not None and (link['href'].startswith('http://')
                                                  or link['href'].startswith('https://')):
                     new_list.append(link['href'])
-                    # get_symbol_gists() histogram for each url in url_list
+                    # get_symbol_gists() histogram for
+                    # each url in url_list,change also string number 79
             get_text(text)
         url_list = new_list
         new_list = []
-    print('Количество ссылок на анализируемом уровне:', len(url_list))
+    print(f'The number of links at the analyzed level: {len(url_list)}')
+    get_images_size()
     get_symbol_gists()
+
+
+def fetch_pic(bs, url):
+    # try https://zastavok.net
+    global images
+    for img in bs.findAll('img'):
+        if img.get('src') is not None and (img.get('src').startswith('http://')
+                                           or img.get('src').startswith('https://')):
+            images.append(img.get('src'))
+        elif img.get('src') is not None:
+            images.append(url + img.get('src'))
+    print(images)
+
+
+def get_images_size():
+    all_images_size = 0
+    good_img_counter = 0
+    for img in images:
+        res = requests.head(img)
+        is_chunked = res.headers.get('transfer-encoding', '') == 'chunked'
+        check_none = res.headers.get('content-length')
+        if not is_chunked and check_none:
+            all_images_size += int(res.headers['content-length'])
+            good_img_counter += 1
+    average_size = all_images_size / good_img_counter
+    print(f'The size of all images on the page: {all_images_size}'
+          f' bytes, average image size: {average_size} bytes')
 
 
 def get_text(url):
@@ -53,7 +81,8 @@ def get_text(url):
         tag.decompose()
     for tag in tree.css('style'):
         tag.decompose()
-    page_text = page_text + tree.body.text()
+    page_text += tree.body.text()
+    # for each row change to =
 
 
 def get_symbol_gists():
@@ -91,8 +120,6 @@ def tag_cloud(text_pages):
     plt.imshow(word_cloud, interpolation='bilinear')
     plt.axis("off")
     plt.figure()
-    plt.imshow(alice_mask, interpolation='bilinear')
-    plt.axis("off")
     plt.show()
 
 
